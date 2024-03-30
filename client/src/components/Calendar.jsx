@@ -4,9 +4,10 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
-import Sidebar from "../components/Sidebar";
+import { Box, useMediaQuery } from "@mui/material";
 
 const Calendar = () => {
+  const isNonMediumScreens = useMediaQuery("(max-width: 960px)");
   const [currentEvents, setCurrentEvents] = useState([]);
   const handleDateClick = (selected) => {
     const title = prompt("Please enter a new title for your event");
@@ -35,42 +36,44 @@ const Calendar = () => {
   };
   return (
     <>
-            <div flex="1 1 100%" className="p-4">
-              <FullCalendar
-                height="75vh"
-                plugins={[
-                  dayGridPlugin,
-                  timeGridPlugin,
-                  interactionPlugin,
-                  listPlugin,
-                ]}
-                headerToolbar={{
-                  left: "prev,next today",
-                  center: "title",
-                  right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
-                }}
-                initialView="dayGridMonth"
-                editable={true}
-                selectable={true}
-                selectMirror={true}
-                dayMaxEvents={true}
-                select={handleDateClick}
-                eventClick={handleEventClick}
-                eventsSet={(events) => setCurrentEvents(events)}
-                initialEvents={[
-                  {
-                    id: "12315",
-                    title: "All-day event",
-                    date: "2022-09-14",
-                  },
-                  {
-                    id: "5123",
-                    title: "Timed event",
-                    date: "2022-09-28",
-                  },
-                ]}
-              />
-            </div>
+      <Box m={isNonMediumScreens ? "0.5rem 0.5rem" : "1.5rem 2.5rem"}>
+        <div flex="1 1 100%" className="p-4">
+          <FullCalendar
+            height="75vh"
+            plugins={[
+              dayGridPlugin,
+              timeGridPlugin,
+              interactionPlugin,
+              listPlugin,
+            ]}
+            headerToolbar={{
+              left: "prev,next today",
+              center: "title",
+              right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+            }}
+            initialView="dayGridMonth"
+            editable={true}
+            selectable={true}
+            selectMirror={true}
+            dayMaxEvents={true}
+            select={handleDateClick}
+            eventClick={handleEventClick}
+            eventsSet={(events) => setCurrentEvents(events)}
+            initialEvents={[
+              {
+                id: "12315",
+                title: "All-day event",
+                date: "2022-09-14",
+              },
+              {
+                id: "5123",
+                title: "Timed event",
+                date: "2022-09-28",
+              },
+            ]}
+          />
+        </div>
+      </Box>
     </>
   );
 };
